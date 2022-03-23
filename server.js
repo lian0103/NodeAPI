@@ -3,6 +3,8 @@ require("dotenv").config(); // ALLOWS ENVIRONMENT VARIABLES TO BE SET ON PROCESS
 const express = require("express");
 const app = express();
 
+app.set('view engine', 'ejs');  
+
 // 處理跨域
 app.use(function (req, res, next) {
   res.header('Access-Control-Allow-Origin', '*');
@@ -19,6 +21,8 @@ app.use(function (req, res, next) {
 
 // Middleware
 app.use(express.json()); // parse json bodies in the request object
+
+app.use("/",require("./routes/fileRoutes"))
 
 // Redirect requests to endpoint starting with /posts to postRoutes.js
 app.use("/posts", require("./routes/postRoutes"));
