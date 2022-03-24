@@ -16,7 +16,7 @@ exports.getFile = async (req, res, next) => {
   // console.log('targetPath', targetPath);
 
   if (!fs.existsSync(targetPath)) {
-    next(new Error('no file!!!'))
+    next(new Error('no file!!!'));
   }
 
   const options = {
@@ -42,8 +42,13 @@ exports.uploadFile = async (req, res, next) => {
       fs.mkdirSync('uploadFiles');
     }
 
+    const filename = fields.fileName
+      ? `${fields.fileName}.${
+          files.filetoupload.originalFilename.split('.')[1]
+        }`
+      : files.filetoupload.originalFilename;
     const oldpath = files.filetoupload.filepath;
-    const newpath = path.join(uploadPath, files.filetoupload.originalFilename);
+    const newpath = path.join(uploadPath, filename);
 
     mv(oldpath, newpath, function (err) {
       if (err) {
