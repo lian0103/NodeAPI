@@ -2,7 +2,9 @@ require('dotenv').config(); // ALLOWS ENVIRONMENT VARIABLES TO BE SET ON PROCESS
 
 const express = require('express');
 const app = express();
-const { httpLogger } = require('./helpers/httpLogger');
+const httpLogger = require('./helpers/httpLogger');
+
+const mail = require('./helpers/mail');
 
 app.set('view engine', 'ejs');
 

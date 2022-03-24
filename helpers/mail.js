@@ -1,5 +1,6 @@
 require('dotenv').config();
 
+const logger = require('./logger');
 const nodemailer = require('nodemailer');
 const transporter = nodemailer.createTransport({
   service: 'gmail',
@@ -17,7 +18,7 @@ const mailOptions = {
   html: `<h1>HI~~!!</h1><img src="https://miro.medium.com/max/676/1*XEgA1TTwXa5AvAdw40GFow.png">`,
 };
 
-exports.sendEmail = (options = {}) => {
+const sendEmail = (options = {}) => {
   let mergeOption = {
     ...mailOptions,
     ...options,
@@ -27,7 +28,14 @@ exports.sendEmail = (options = {}) => {
     if (error) {
       console.log(error);
     } else {
-      console.log('Email sent: ' + info.response);
+      logger.info(mergeOption);
     }
   });
 };
+
+//判斷呼叫此模組的來源是不是自己
+if (require.main === module) {
+  sendEmail();
+}
+
+module.exports = sendEmail;
