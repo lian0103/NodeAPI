@@ -9,6 +9,31 @@ exports.uploadPage = (req, res, next) => {
   });
 };
 
+exports.getFile = async (req, res, next) => {
+  let fileName = req.params.fileName;
+  const targetPath = path.join(process.cwd(), 'uploadFiles', fileName);
+
+  console.log('targetPath', targetPath);
+
+  if (!fs.existsSync(targetPath)) {
+    res.write('no targetFile');
+    res.end();
+  }
+
+  const options = {
+    root: path.join(process.cwd(), 'uploadFiles'),
+  };
+
+  res.sendFile(fileName, options, function (err) {
+    if (err) {
+      res.write('no targetFile');
+      res.end();
+    } else {
+      console.log('Sent:', fileName);
+    }
+  });
+};
+
 exports.uploadFile = async (req, res, next) => {
   const form = new formidable.IncomingForm();
   form.parse(req, function (err, fields, files) {
