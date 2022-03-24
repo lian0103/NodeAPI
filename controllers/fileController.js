@@ -13,11 +13,10 @@ exports.getFile = async (req, res, next) => {
   let fileName = req.params.fileName;
   const targetPath = path.join(process.cwd(), 'uploadFiles', fileName);
 
-  console.log('targetPath', targetPath);
+  // console.log('targetPath', targetPath);
 
   if (!fs.existsSync(targetPath)) {
-    res.write('no targetFile');
-    res.end();
+    next(new Error('no file!!!'))
   }
 
   const options = {
