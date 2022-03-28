@@ -10,25 +10,14 @@ exports.uploadPage = (req, res, next) => {
 };
 
 exports.getFile = async (req, res, next) => {
-  let fileName = req.params.fileName;
-  const targetPath = path.join(process.cwd(), 'uploadFiles', fileName);
-
-  // console.log('targetPath', targetPath);
-
-  if (!fs.existsSync(targetPath)) {
-    next(new Error('no file!!!'));
-  }
-
+  const fileName = req.params.fileName;
   const options = {
     root: path.join(process.cwd(), 'uploadFiles'),
   };
 
   res.sendFile(fileName, options, function (err) {
     if (err) {
-      res.write('no targetFile');
-      res.end();
-    } else {
-      console.log('Sent:', fileName);
+      next(new Error('無此檔案'));
     }
   });
 };
