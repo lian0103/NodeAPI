@@ -4,8 +4,6 @@ const express = require('express');
 const app = express();
 const httpLogger = require('./helpers/httpLogger');
 
-const mail = require('./helpers/mail');
-
 app.set('view engine', 'ejs');
 
 //紀錄http請求
